@@ -30,21 +30,34 @@ function createDocumentHandler(
   el: HTMLElement,
   binding: DirectiveBinding,
 ): DocumentHandler {
+  const excluds = []
+  if (binding.arg && binding.arg.length) {
+    excluds.concat(Array.from(binding.arg))
+  } else {
+    excluds.push(binding.arg)
+  }
+
   return function(mouseup, mousedown) {
     const popperRef = (binding.instance as ComponentPublicInstance<{
       popperRef: Nullable<HTMLElement>
     }>).popperRef
+
+    const hasNoBinding = !binding || !binding.instance
+    const targetExists = !mouseup.target || !mousedown.target
+    const isInContain = el.contains(mouseup.target as Node) || el.contains(mousedown.target as Node)
+    const isSelf = el === mouseup.target
+    const isInExcluds = (excluds.length && excluds.some(item => item.contains(mouseup.target))) || (excluds.length && excluds.includes(mouseup.target))
+    const isInPopperRef = (popperRef &&
+      (popperRef.contains(mouseup.target as Node) ||
+        popperRef.contains(mousedown.target as Node)))
+
     if (
-      !binding ||
-      !binding.instance ||
-      !mouseup.target ||
-      !mousedown.target ||
-      el.contains(mouseup.target as Node) ||
-      el.contains(mousedown.target as Node) ||
-      el === mouseup.target ||
-      (popperRef &&
-        (popperRef.contains(mouseup.target as Node) ||
-          popperRef.contains(mousedown.target as Node)))
+      hasNoBinding ||
+      targetExists ||
+      isInContain ||
+      isSelf ||
+      isInExcluds ||
+      isInPopperRef
     ) {
       return
     }
