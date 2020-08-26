@@ -167,7 +167,7 @@ describe('Carousel', () => {
 
       setTimeout(() => {
         const items = wrapper.vm.$el.querySelectorAll('.el-carousel__item')
-        // wrapper.findAll('.el-carousel__indicator')[2].trigger('click')
+        wrapper.findAll('.el-carousel__indicator')[1].trigger('click')
         setTimeout(() => {
           wrapper.findAll('.el-carousel__item').forEach(d => {
             console.log(d.classes())
