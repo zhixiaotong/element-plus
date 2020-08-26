@@ -205,6 +205,8 @@ describe('Carousel', () => {
         wrapper.vm.$refs.carousel.setActiveItem(1)
         setTimeout(() => {
           console.log(wrapper.findAll('.el-carousel__item')[1].classes())
+          console.log('vm')
+          console.log(wrapper.vm.$refs)
           expect(
             wrapper
               .findAll('.el-carousel__item')[1]
