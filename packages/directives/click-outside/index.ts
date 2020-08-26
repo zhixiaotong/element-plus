@@ -46,7 +46,7 @@ function createDocumentHandler(
     const targetExists = !mouseup.target || !mousedown.target
     const isInContain = el.contains(mouseup.target as Node) || el.contains(mousedown.target as Node)
     const isSelf = el === mouseup.target
-    const isInExcluds = (excluds.length && excluds.some(item => item.contains(mouseup.target))) || (excluds.length && excluds.includes(mouseup.target))
+    const isInExcluds = (excluds.length && excluds.some(item => item?.contains(mouseup.target))) || (excluds.length && excluds.includes(mouseup.target))
     const isInPopperRef = (popperRef &&
       (popperRef.contains(mouseup.target as Node) ||
         popperRef.contains(mousedown.target as Node)))
