@@ -159,7 +159,7 @@ describe('Carousel', () => {
     it('click', done => {
       const wrapper = _mount(`
         <div>
-          <el-carousel :autoplay="false" trigger="click" ref="carousel">
+          <el-carousel trigger="click" ref="carousel">
             <el-carousel-item v-for="item in 3" :key="item"></el-carousel-item>
           </el-carousel>
         </div>
