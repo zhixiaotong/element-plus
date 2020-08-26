@@ -214,7 +214,7 @@ describe('Carousel', () => {
               .includes('is-active'),
           ).toBeTruthy()
           done()
-        }, 100)
+        }, 10)
       }, 10)
     })
 
