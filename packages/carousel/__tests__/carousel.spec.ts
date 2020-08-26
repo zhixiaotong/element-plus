@@ -204,13 +204,15 @@ describe('Carousel', () => {
       setTimeout(() => {
         wrapper.vm.$refs.carousel.setActiveItem(1)
         setTimeout(() => {
+          console.log(wrapper.findAll('.el-carousel__item')[1].classes())
           expect(
-            wrapper.vm.$el
-              .querySelectorAll('.el-carousel__item')[1]
-              .classList.contains('is-active'),
+            wrapper
+              .findAll('.el-carousel__item')[1]
+              .classes()
+              .includes('is-active'),
           ).toBeTruthy()
           done()
-        }, 10)
+        }, 50)
       }, 10)
     })
 
