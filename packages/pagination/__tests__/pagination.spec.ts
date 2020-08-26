@@ -1,5 +1,6 @@
 import { mount } from '@vue/test-utils'
 import Pagination from '../src/index'
+import { nextTick } from 'vue'
 
 describe('Pagination.vue', () => {
   it('layout', () => {
@@ -81,7 +82,7 @@ describe('Pagination.vue', () => {
     expect(wrapper.findAll('li.number').length).toBe(21)
   })
 
-  it('will work without total & page-count', (done) => {
+  it('will work without total & page-count', done => {
     const wrapper = mount(Pagination, {
       props: {
         pageSize: 25,
@@ -151,28 +152,31 @@ describe('click pager', () => {
     expect(wrapper.vm.internalCurrentPage).toEqual(2)
   })
 
-  it('click next icon-more', () => {
+  it('click next icon-more', async () => {
     const wrapper = mount(Pagination, {
       props: {
         total: 1000,
       },
     })
+    await nextTick()
     wrapper.find('.el-pager .more').trigger('click')
     expect(wrapper.vm.internalCurrentPage).toEqual(6)
   })
 
-  it('click prev icon-more', done => {
+  it('click prev icon-more', async () => {
     const wrapper = mount(Pagination, {
       props: {
         total: 1000,
       },
     })
-    wrapper.find('.btn-quicknext.more').trigger('click')
+    await nextTick()
+    const nextmore = wrapper.find('.btn-quicknext.more')
+    await nextmore.trigger('click')
+
     setTimeout(() => {
       expect(wrapper.find('.btn-quickprev.more').exists()).toBe(true)
       wrapper.find('.btn-quickprev.more').trigger('click')
       expect(wrapper.vm.internalCurrentPage).toEqual(1)
-      done()
     }, 50)
   })
 
